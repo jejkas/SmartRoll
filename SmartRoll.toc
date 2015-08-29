@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: SmartRoll
+## Notes: SmartRoll
+## Author: rexas - rexas.net/wow
+## Version: 1.0
+SmartRoll.lua
