@@ -1,4 +1,5 @@
 SmartRoll_WaitingForRoll = false;
+SmartRoll_versionNumber = "1.0.0";
 
 SmartRoll_LastUpdate = GetTime();
 function SmartRoll_OnUpdate()
@@ -96,9 +97,9 @@ function SmartRoll_OnEvent()
 			--SmartRoll_("[SmartRoll] Winner: " .. winnerName);
 			if UnitInRaid("player") == 1
 			then
-				SendChatMessage("[SmartRoll] Winner: " .. winnerName, "RAID");
+				SendChatMessage("[SmartRoll] Winner: " .. winnerName .. " (SmartRoll Version: "..SmartRoll_versionNumber..")", "RAID");
 			else
-				SendChatMessage("[SmartRoll] Winner: " .. winnerName, "PARTY");
+				SendChatMessage("[SmartRoll] Winner: " .. winnerName .. " (SmartRoll Version: "..SmartRoll_versionNumber..")", "PARTY");
 			end
 
 			SmartRoll_WaitingForRoll = false;
