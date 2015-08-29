@@ -12,9 +12,12 @@ end
 SLASH_SmartRoll1 = "/SmartRoll";
 
 SmartRoll_rollList = {};
+SmartRoll_rollNameList = {};
 
 -- /smartroll NOPE 33 Coalition 18 NinjaRabbits 12
+-- /smartroll a 1 b 2 c 3 d 4
 SlashCmdList["SmartRoll"] = function(args)
+	local inc = 0;
 	if args == nil or args == ""
 	then
 		--SmartRoll_("/SmartRoll name number[ name number[ ...]]");
@@ -24,6 +27,7 @@ SlashCmdList["SmartRoll"] = function(args)
 
 		-- Clear the current roll list so we don't have old data in there.
 		SmartRoll_rollList = {};
+		SmartRoll_rollNameList = {};
 
 		-- how high our max roll will be.
 		local totalRollNumber = 0;
@@ -40,7 +44,10 @@ SlashCmdList["SmartRoll"] = function(args)
 			then
 				break;
 			end
-			SmartRoll_rollList[d[i]] = tonumber(d[i+1]);
+			--SmartRoll_rollList[d[i]] = tonumber(d[i+1]);
+			inc = inc + 1;
+			SmartRoll_rollList[inc] = tonumber(d[i+1]);
+			SmartRoll_rollNameList[inc] = d[i];
 			local oldTotalRollNumber = totalRollNumber;
 			if totalRollNumber == 0
 			then
@@ -113,14 +120,21 @@ function SmartRoll_GetWinnerFromNumber(nr)
 	local lastNumber = 1;
 	--SmartRoll_("GetWinnerFromNumber: ".. nr);
 	--SmartRoll_(SmartRoll_rollList);
-	for name, nameNr in pairs(SmartRoll_rollList)
+	for i, nameNr in pairs(SmartRoll_rollList)
 	do
-		--SmartRoll_("GetWinnerFromNumber: "..name .. " -> " .. nameNr);
-		if lastNumber >= nr or nameNr + lastNumber <= nr
+		--SmartRoll_("lastNumber : ".. lastNumber .. " nameNr: " .. nameNr .. " (".. i ..")");
+		if nr >= lastNumber and nr <= nameNr + lastNumber 
 		then
-			return name;
+			return SmartRoll_rollNameList[i];
 		end
-		lastNumber = lastNumber + nameNr;
+
+		if lastNumber == 1
+		then
+			lastNumber = lastNumber + nameNr;
+		else
+			-- Increase it by 1 every time but the first time.
+			lastNumber = lastNumber + nameNr + 1;
+		end
 	end
 end
 
