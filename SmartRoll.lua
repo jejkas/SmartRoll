@@ -124,7 +124,7 @@ function SmartRoll_GetWinnerFromNumber(nr)
 	end
 end
 
-function --SmartRoll_(str)
+function SmartRoll_(str)
 	local c = ChatFrame1;
 	
 	if str == nil
